@@ -1,0 +1,10 @@
+INSERT INTO tarea (titulo, descripcion, fecha_creacion, fecha_vencimiento, estado) VALUES ('Comprar víveres', 'Ir al supermercado a comprar alimentos básicos', '2025-09-20', '2025-09-21', 'PENDIENTE');
+INSERT INTO tarea (titulo, descripcion, fecha_creacion, fecha_vencimiento, estado) VALUES ('Estudiar Java', 'Repasar colecciones y JPA', '2025-09-18', '2025-09-25', 'EN_PROGRESO');
+INSERT INTO tarea (titulo, descripcion, fecha_creacion, fecha_vencimiento, estado) VALUES ('Llamar al médico', 'Agendar cita anual de control', '2025-09-15', '2025-09-30', 'PENDIENTE');
+INSERT INTO tarea (titulo, descripcion, fecha_creacion, fecha_vencimiento, estado) VALUES ('Limpiar la casa', 'Barrido y trapeado completo', '2025-09-10', '2025-09-12', 'COMPLETADA');
+INSERT INTO tarea (titulo, descripcion, fecha_creacion, fecha_vencimiento, estado) VALUES ('Enviar informe mensual', 'Reporte de progreso del proyecto', '2025-09-01', '2025-09-05', 'COMPLETADA');
+INSERT INTO tarea (titulo, descripcion, fecha_creacion, fecha_vencimiento, estado) VALUES ('Revisar correos', 'Responder pendientes de la semana', '2025-09-25', '2025-09-26', 'PENDIENTE');
+INSERT INTO tarea (titulo, descripcion, fecha_creacion, fecha_vencimiento, estado) VALUES ('Pagar servicios', 'Luz, agua e internet', '2025-09-22', '2025-09-28', 'PENDIENTE');
+INSERT INTO tarea (titulo, descripcion, fecha_creacion, fecha_vencimiento, estado) VALUES ('Planificar vacaciones', 'Definir destino y fechas de viaje', '2025-09-05', '2025-10-05', 'EN_PROGRESO');
+INSERT INTO tarea (titulo, descripcion, fecha_creacion, fecha_vencimiento, estado) VALUES ('Reunión con equipo', 'Planificación sprint semanal', '2025-09-27', '2025-09-28', 'EN_PROGRESO');
+INSERT INTO tarea (titulo, descripcion, fecha_creacion, fecha_vencimiento, estado) VALUES ('Leer libro', 'Avanzar capítulos de novela', '2025-09-12', '2025-09-30', 'PENDIENTE');
