@@ -25,7 +25,7 @@ public class TareaEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	private String titulo;
 	private String descripcion;
 	

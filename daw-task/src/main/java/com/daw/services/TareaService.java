@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.daw.persistence.entities.TareaEntity;
 import com.daw.persistence.repositories.TareaRepository;
+import com.daw.services.exceptions.TareaNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +20,12 @@ public class TareaService {
 		return this.tareaRepository.findAll();
 	}
 	
-	
+	public TareaEntity findById(long idTarea) {
+		if(!this.tareaRepository.existsById(idTarea)) {
+			throw new TareaNotFoundException(String.format("La tarea con id %d no existe. ", idTarea));
+		}
+		
+		return this.tareaRepository.findById(idTarea).get();
+	}
 
 }
