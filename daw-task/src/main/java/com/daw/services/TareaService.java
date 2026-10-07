@@ -54,6 +54,9 @@ public class TareaService {
 		if(tareaEntity.getId() != idTarea) {
 			throw new TareaException("El id del body y el id del path no coinciden. ");
 		}
+		if(!this.tareaRepository.existsById(idTarea)) {
+			throw new TareaNotFoundException(String.format("La tarea con id %d no existe. ", idTarea));
+		}
 		if(tareaEntity.getFechaCreacion() != null) {
 			throw new TareaException("La fecha de creación no se puede modificar. ");
 		}
@@ -64,7 +67,13 @@ public class TareaService {
 			throw new TareaException("La fecha de vencimiento debe ser posterior a la fecha de creación.");
 		}
 		
-		return this.tareaRepository.save(tareaEntity);
+		TareaEntity tareaBD = this.findById(idTarea);
+		
+		tareaBD.setTitulo(tareaEntity.getTitulo());
+		tareaBD.setDescripcion(tareaEntity.getDescripcion());
+		tareaBD.setFechaVencimiento(tareaEntity.getFechaVencimiento());
+		
+		return this.tareaRepository.save(tareaBD);
 	}
 	
 	public void deleteById(long idTarea) {
@@ -75,4 +84,22 @@ public class TareaService {
 		this.tareaRepository.deleteById(idTarea);
 	}
 
+	public TareaEntity iniciar(long idTarea) {
+		//Aquí traigo la tarea de la BD y compruebo que el ID exista
+		TareaEntity tarea = this.findById(idTarea);
+		
+		if(!tarea.getEstado().equals(Estado.PENDIENTE)) {
+			throw new TareaException("No se puede iniciar una tarea en progreso o completada");
+		}
+				
+		
+		tarea.setEstado(Estado.EN_PROGRESO);
+		return this.tareaRepository.save(tarea);
+	}
+	
+	public List<TareaEntity> getVencidas(){
+		return this.tareaRepository.findByFechaVencimientoBefore(LocalDate.now());
+	}
+	
+	
 }

@@ -75,5 +75,18 @@ public class TareaController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 		}
 	}
+	
+	@PutMapping("/{idTarea}/iniciar")
+	public ResponseEntity<?> iniciar(@PathVariable long idTarea){
+		try {
+			return ResponseEntity.ok(this.tareaService.iniciar(idTarea));
+		}
+		catch(TareaNotFoundException ex) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+		}
+		catch(TareaException ex) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+		}
+	} 
 
 }
