@@ -117,12 +117,12 @@ function setupEventListeners() {
  * [ALUMNO] Construir el payload con los valores de los inputs del formulario
  */
 async function handleGuardar() {
-    const id = document.getElementById('campo-id').value;
+    const id = document.getElementById('tarea-id').value;
 
     // [ALUMNO] Leer los valores de los inputs del modal
-    // const campo1 = document.getElementById('campo-texto').value.trim();
-    // const campo2 = document.getElementById('campo-textarea').value.trim();
-    // const fecha  = document.getElementById('campo-fecha').value;
+    const titulo = document.getElementById('tarea-titulo').value.trim();
+    const descripcion = document.getElementById('tarea-descripcion').value.trim();
+    const fechaVencimiento  = document.getElementById('tarea-fecha-vencimiento').value;
 
     try {
         if (id) {
@@ -132,23 +132,27 @@ async function handleGuardar() {
             const payloadUpdate = {
                 id: parseInt(id),
                 // [ALUMNO] añadir campos editables:
-                // campo1: campo1,
-                // campo2: campo2,
-                // campofecha: fecha
+                titulo: titulo,
+                descripcion: descripcion,
+                fechaVencimiento: fechaVencimiento,
+				fechaCreacion: null,
+				estado: null
             };
             await ApiService.update(id, payloadUpdate);
-            UIService.showToast(`Registro #${id} actualizado correctamente.`, 'success');
+            UIService.showToast(`Tarea #${id} actualizado correctamente.`, 'success');
         } else {
             // MODO CREACIÓN: POST /entidad
             // ⚠️ No incluir campos que el service asigne automáticamente (estado, fechaCreacion...)
             const payloadCreate = {
                 // [ALUMNO] añadir campos:
-                // campo1: campo1,
-                // campo2: campo2,
-                // campofecha: fecha
+				titulo: titulo,
+				descripcion: descripcion,
+				fechaVencimiento: fechaVencimiento,
+				fechaCreacion: null,
+				estado: null
             };
             const nuevo = await ApiService.create(payloadCreate);
-            UIService.showToast(`Registro #${nuevo.id} creado correctamente.`, 'success');
+            UIService.showToast(`Tarea #${nuevo.id} creada correctamente.`, 'success');
         }
 
         UIService.closeModalForm();

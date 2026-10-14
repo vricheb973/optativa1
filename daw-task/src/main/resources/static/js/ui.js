@@ -76,23 +76,23 @@ export const UIService = {
      * [ALUMNO] Adaptar el bloque "MODO EDICIÓN" para rellenar los campos
      * de tu entidad a partir del objeto recibido del backend.
      *
-     * @param {Object|null} item - null = Crear, objeto = Editar
+     * @param {Object|null} tarea - null = Crear, objeto = Editar
      */
-    openModalForm(item = null) {
+    openModalForm(tarea = null) {
         this.elements.formEntidad.reset();
 
-        if (item) {
+        if (tarea) {
             // MODO EDICIÓN: rellenar cada input con los datos del registro
-            this.elements.modalFormTitulo.textContent = `Editar Registro #${item.id}`;
-            document.getElementById('campo-id').value     = item.id;
+            this.elements.modalFormTitulo.textContent = `Editar tarea #${tarea.id}`;
+            document.getElementById('tarea-id').value     = tarea.id;
             // [ALUMNO] Rellenar aquí el resto de campos:
-            // document.getElementById('campo-texto').value  = item.campo1 || '';
-            // document.getElementById('campo-fecha').value  = item.campofecha || '';
-            // document.getElementById('campo-select').value = item.campoEnum || '';
+            document.getElementById('tarea-titulo').value  = tarea.titulo || '';
+            document.getElementById('tarea-descripcion').value  = tarea.descripcion || '';
+            document.getElementById('tarea-fecha-vencimiento').value = tarea.fechaVencimiento || '';
         } else {
             // MODO CREACIÓN: limpiar el campo oculto de ID
-            this.elements.modalFormTitulo.textContent = 'Nuevo Registro';
-            document.getElementById('campo-id').value = '';
+            this.elements.modalFormTitulo.textContent = 'Nueva tarea';
+			document.getElementById('tarea-id').value     = '';
         }
 
         this.elements.modalForm.classList.remove('hidden');
@@ -110,20 +110,32 @@ export const UIService = {
      * [ALUMNO] Adaptar el innerHTML para mostrar los campos de tu entidad.
      * Usar el patrón detail-item / detail-label / detail-value.
      */
-    openModalDetalle(item) {
+    openModalDetalle(tarea) {
         this.elements.detalleContent.innerHTML = `
             <div class="detail-item">
                 <div class="detail-label">ID</div>
-                <div class="detail-value"><strong>#${item.id}</strong></div>
+                <div class="detail-value"><strong>#${tarea.id}</strong></div>
             </div>
             <div class="detail-item">
-                <div class="detail-label">Campo 1</div>
-                <div class="detail-value">${this.escapeHTML(item.campo1)}</div>
+                <div class="detail-label">Título</div>
+                <div class="detail-value">${tarea.titulo}</div>
             </div>
             <div class="detail-item">
-                <div class="detail-label">Campo 2 (texto largo)</div>
-                <div class="detail-value">${this.escapeHTML(item.campo2 || 'Sin datos.')}</div>
+                <div class="detail-label">Descripción</div>
+                <div class="detail-value">${tarea.descripcion || 'Sin datos.'}</div>
             </div>
+			<div class="detail-item">
+			    <div class="detail-label">Fecha creación</div>
+			    <div class="detail-value">${tarea.fechaCreacion || 'Sin datos.'}</div>
+			</div>
+			<div class="detail-item">
+			    <div class="detail-label">Fecha vencimiento</div>
+			    <div class="detail-value">${tarea.fechaVencimiento || 'Sin datos.'}</div>
+			</div>
+			<div class="detail-item">
+			    <div class="detail-label">Estado</div>
+			    <div class="detail-value">${tarea.estado}</div>
+			</div>
         `;
         this.elements.modalDetalle.classList.remove('hidden');
     },

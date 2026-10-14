@@ -63,11 +63,12 @@ public class TareaService {
 		if(tareaEntity.getEstado() != null) {
 			throw new TareaException("El estado no se puede modificar. ");
 		}
+		
+		TareaEntity tareaBD = this.findById(idTarea);
+		
 		if(tareaEntity.getFechaVencimiento().isBefore(LocalDate.now())) {
 			throw new TareaException("La fecha de vencimiento debe ser posterior a la fecha de creación.");
 		}
-		
-		TareaEntity tareaBD = this.findById(idTarea);
 		
 		tareaBD.setTitulo(tareaEntity.getTitulo());
 		tareaBD.setDescripcion(tareaEntity.getDescripcion());
