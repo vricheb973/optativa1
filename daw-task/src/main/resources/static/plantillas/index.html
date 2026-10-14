@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación Web Spring Boot | DAW</title>
+    <!-- CSS Design System (NO TOCAR) -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Fuente Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ====================================================================
+         CABECERA PRINCIPAL (NAVBAR)
+         ==================================================================== -->
+    <header class="navbar">
+        <div class="container navbar-content">
+            <div class="brand">
+                <span class="brand-icon">⚡</span>
+                <h1>DAW Full-Stack App</h1>
+            </div>
+            <!-- [ALUMNO] Añadir aquí los botones de acción principal si es necesario -->
+            <button id="btn-nuevo" class="btn btn-primary">+ Nuevo Registro</button>
+        </div>
+    </header>
+
+    <!-- ====================================================================
+         CONTENIDO PRINCIPAL
+         ==================================================================== -->
+    <main class="container main-content">
+        
+        <!-- BARRA SUPERIOR: BUSCADOR Y ESTADÍSTICAS -->
+        <section class="dashboard-bar">
+            <div class="search-box">
+                <input type="text" id="input-buscar" placeholder="Buscar...">
+            </div>
+            <div class="stats-summary">
+                <span class="stat-pill">Total: <strong id="stat-total">0</strong></span>
+            </div>
+        </section>
+
+        <!-- [ALUMNO] TABLA / LISTADO DE DATOS -->
+        <section class="card">
+            <div class="card-header">
+                <h2>Listado de Entidades</h2>
+                <button id="btn-recargar" class="btn btn-secondary btn-sm">🔄 Recargar</button>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <!-- [ALUMNO] Definir aquí las columnas de la tabla -->
+                            <th style="width: 60px;">ID</th>
+                            <th>Campo 1</th>
+                            <th>Campo 2</th>
+                            <th style="width: 140px; text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-tbody">
+                        <!-- Las filas se cargan dinámicamente mediante JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Estados de carga / vacío -->
+            <div id="loading-state" class="state-placeholder hidden">
+                <div class="spinner"></div>
+                <p>Cargando datos...</p>
+            </div>
+            
+            <div id="empty-state" class="state-placeholder hidden">
+                <p>No hay registros disponibles.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ====================================================================
+         MODAL 1: FORMULARIO CREAR / EDITAR
+         ==================================================================== -->
+    <div id="modal-form" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modal-form-titulo">Nuevo Registro</h3>
+                <button id="btn-cerrar-form" class="btn-icon-close">&times;</button>
+            </div>
+            <form id="form-entidad">
+                <div class="modal-body">
+
+                    <!-- Campo oculto para ID (necesario en el modo Edición) -->
+                    <input type="hidden" id="campo-id">
+
+                    <!-- [ALUMNO] Campos del formulario según la entidad -->
+
+                    <!-- TEXTO CORTO -->
+                    <div class="form-group">
+                        <label for="campo-texto">Texto Corto <span class="req">*</span></label>
+                        <input type="text" id="campo-texto" required placeholder="Ingrese texto...">
+                    </div>
+
+                    <!-- TEXTO LARGO -->
+                    <div class="form-group">
+                        <label for="campo-textarea">Texto Largo</label>
+                        <textarea id="campo-textarea" rows="3" placeholder="Ingrese descripción..."></textarea>
+                    </div>
+
+                    <div class="form-row">
+
+                        <!-- FECHA -->
+                        <div class="form-group">
+                            <label for="campo-fecha">Fecha <span class="req">*</span></label>
+                            <input type="date" id="campo-fecha" required>
+                        </div>
+
+                        <!-- SELECT / ENUM -->
+                        <div class="form-group">
+                            <label for="campo-select">Estado (Enum)</label>
+                            <select id="campo-select">
+                                <option value="OPCION_1">OPCION_1</option>
+                                <option value="OPCION_2">OPCION_2</option>
+                                <option value="OPCION_3">OPCION_3</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <!-- NUMÉRICO (descomenta si lo necesitas) -->
+                    <!--
+                    <div class="form-group">
+                        <label for="campo-numero">Número</label>
+                        <input type="number" id="campo-numero" step="0.01" min="0">
+                    </div>
+                    -->
+
+                    <!-- BOOLEANO / CHECKBOX (descomenta si lo necesitas) -->
+                    <!--
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="campo-activo"> Activo
+                        </label>
+                    </div>
+                    -->
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="btn-cancelar-form" class="btn btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         MODAL 2: VER DETALLE COMPLETO
+         ==================================================================== -->
+    <div id="modal-detalle" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Detalle del Registro</h3>
+                <button id="btn-cerrar-detalle" class="btn-icon-close">&times;</button>
+            </div>
+            <div class="modal-body" id="detalle-content">
+                <!-- Se rellena dinámicamente desde UIService.openModalDetalle() -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-cerrar-detalle-footer" class="btn btn-secondary">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENEDOR DE NOTIFICACIONES TOAST (NO TOCAR) -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
