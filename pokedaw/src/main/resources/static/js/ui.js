@@ -114,31 +114,31 @@ export const UIService = {
      * [ALUMNO] Adaptar el innerHTML para mostrar los campos de tu entidad.
      * Usar el patrón detail-item / detail-label / detail-value.
      */
-    openModalDetalle(tarea) {
+    openModalDetalle(pokemon) {
         this.elements.detalleContent.innerHTML = `
             <div class="detail-item">
                 <div class="detail-label">ID</div>
-                <div class="detail-value"><strong>#${tarea.id}</strong></div>
+                <div class="detail-value"><strong>#${pokemon.id}</strong></div>
             </div>
             <div class="detail-item">
-                <div class="detail-label">Título</div>
-                <div class="detail-value">${tarea.titulo}</div>
+                <div class="detail-label">Nº Pokédex</div>
+                <div class="detail-value">${pokemon.numeroPokedex}</div>
             </div>
             <div class="detail-item">
-                <div class="detail-label">Descripción</div>
-                <div class="detail-value">${tarea.descripcion || 'Sin datos.'}</div>
+                <div class="detail-label">Nombre</div>
+                <div class="detail-value">${pokemon.nombre || 'Sin datos.'}</div>
             </div>
 			<div class="detail-item">
-			    <div class="detail-label">Fecha creación</div>
-			    <div class="detail-value">${tarea.fechaCreacion || 'Sin datos.'}</div>
+			    <div class="detail-label">Tipo 1</div>
+			    <div class="detail-value">${pokemon.tipo1 || 'Sin datos.'}</div>
 			</div>
 			<div class="detail-item">
-			    <div class="detail-label">Fecha vencimiento</div>
-			    <div class="detail-value">${tarea.fechaVencimiento || 'Sin datos.'}</div>
+			    <div class="detail-label">Tipo 2</div>
+			    <div class="detail-value">${pokemon.tipo2 || 'Sin datos.'}</div>
 			</div>
 			<div class="detail-item">
-			    <div class="detail-label">Estado</div>
-			    <div class="detail-value">${tarea.estado}</div>
+			    <div class="detail-label">Fecha de captura</div>
+			    <div class="detail-value">${pokemon.fechaCaptura}</div>
 			</div>
         `;
         this.elements.modalDetalle.classList.remove('hidden');
