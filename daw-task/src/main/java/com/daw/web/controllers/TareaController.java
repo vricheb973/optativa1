@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.daw.persistence.entities.TareaEntity;
@@ -88,5 +89,35 @@ public class TareaController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
 		}
 	} 
+	
+	@GetMapping("/pendientes")
+	public  ResponseEntity<List<TareaEntity>> pendientes() {
+		return ResponseEntity.ok(this.tareaService.getPendientes());
+	}
+	
+	@GetMapping("/en_progreso")
+	public  ResponseEntity<List<TareaEntity>> enProgreso() {
+		return ResponseEntity.ok(this.tareaService.getEnProgreso());
+	}
+	
+	@GetMapping("/completadas")
+	public  ResponseEntity<List<TareaEntity>> completadas() {
+		return ResponseEntity.ok(this.tareaService.getCompletadas());
+	}
+	
+	@GetMapping("/vencidas")
+	public  ResponseEntity<List<TareaEntity>> vencidas() {
+		return ResponseEntity.ok(this.tareaService.getVencidas());
+	}
+	
+	@GetMapping("/no_vencidas")
+	public  ResponseEntity<List<TareaEntity>> noVencidas() {
+		return ResponseEntity.ok(this.tareaService.getNoVencidas());
+	}
+	
+	@GetMapping("/titulo")
+	public  ResponseEntity<List<TareaEntity>> buscarPorTitulo(@RequestParam(defaultValue = "") String titulo) {
+		return ResponseEntity.ok(this.tareaService.buscarPorTitulo(titulo));
+	}
 
 }

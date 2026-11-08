@@ -98,8 +98,28 @@ public class TareaService {
 		return this.tareaRepository.save(tarea);
 	}
 	
+	public List<TareaEntity> getPendientes(){
+		return this.tareaRepository.findByEstado(Estado.PENDIENTE);
+	}
+	
+	public List<TareaEntity> getEnProgreso(){
+		return this.tareaRepository.findByEstado(Estado.EN_PROGRESO);
+	}
+	
+	public List<TareaEntity> getCompletadas(){
+		return this.tareaRepository.findByEstado(Estado.COMPLETADA);
+	}
+	
 	public List<TareaEntity> getVencidas(){
 		return this.tareaRepository.findByFechaVencimientoBefore(LocalDate.now());
+	}
+	
+	public List<TareaEntity> getNoVencidas(){
+		return this.tareaRepository.findByFechaVencimientoAfter(LocalDate.now());
+	}
+	
+	public List<TareaEntity> buscarPorTitulo(String titulo){
+		return this.tareaRepository.findByTituloContaining(titulo);
 	}
 	
 	
