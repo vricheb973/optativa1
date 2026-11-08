@@ -98,6 +98,19 @@ public class TareaService {
 		return this.tareaRepository.save(tarea);
 	}
 	
+	public TareaEntity completar(long idTarea) {
+		//Aquí traigo la tarea de la BD y compruebo que el ID exista
+		TareaEntity tarea = this.findById(idTarea);
+		
+		if(!tarea.getEstado().equals(Estado.EN_PROGRESO)) {
+			throw new TareaException("No se puede completar una tarea en pendiente o completada");
+		}
+				
+		
+		tarea.setEstado(Estado.COMPLETADA);
+		return this.tareaRepository.save(tarea);
+	}
+	
 	public List<TareaEntity> getPendientes(){
 		return this.tareaRepository.findByEstado(Estado.PENDIENTE);
 	}
